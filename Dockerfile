@@ -1,10 +1,14 @@
 FROM python:3.8.5-slim-buster
+COPY . .
 
 FROM tsl0922/musl-cross
+COPY . .
 RUN git clone --depth=1 https://github.com/tsl0922/ttyd.git /ttyd \
     && cd /ttyd && env BUILD_TARGET=$BUILD_TARGET WITH_SSL=$WITH_SSL ./scripts/cross-build.sh
+COPY . .
 
 FROM ubuntu:18.04
+COPY . .
 COPY --from=0 /ttyd/build/ttyd /usr/bin/ttyd
 
 ADD https://github.com/krallin/tini/releases/download/v0.18.0/tini /sbin/tini
