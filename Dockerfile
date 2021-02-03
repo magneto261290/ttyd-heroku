@@ -29,6 +29,8 @@ ENV DEBIAN_FRONTEND noninteractive
 # sets the TimeZone, to be used inside the container
 ENV TZ Asia/Kolkata
 
+COPY . .
+COPY requirements.txt .
 # rclone
 RUN curl https://rclone.org/install.sh | bash
 RUN pip3 install -r requirements.txt
