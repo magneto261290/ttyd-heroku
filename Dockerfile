@@ -11,10 +11,10 @@ RUN chmod +x /sbin/tini
 FROM python:3.8.5-slim-buster
 
 RUN apt-get update; apt-get install -y --no-install-recommends python3 python3-setuptools python3-pip zip unzip p7zip-full \
-    wget nano detox tmux curl htop net-tools && apt-get autoclean && apt-get autoremove && \
+    wget nano detox tmux curl htop net-tools \
     neofetch python3-dev git bash build-essential nodejs npm ruby \
     python-minimal locales python-lxml gettext-base xz-utils \
-    pip3 install gdown && pip3 install speedtest-cli && rm -rf /var/lib/apt/lists/*
+    pip3 install gdown && pip3 install speedtest-cli && apt-get autoclean && apt-get autoremove && rm -rf /var/lib/apt/lists/*
     
 RUN wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz && \
     tar xvf ffmpeg*.xz && \
