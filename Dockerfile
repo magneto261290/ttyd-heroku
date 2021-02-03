@@ -1,21 +1,15 @@
-FROM python:3.8.5-slim-buster
-COPY . .
-
 FROM tsl0922/musl-cross
-COPY . .
 RUN git clone --depth=1 https://github.com/tsl0922/ttyd.git /ttyd \
     && cd /ttyd && env BUILD_TARGET=$BUILD_TARGET WITH_SSL=$WITH_SSL ./scripts/cross-build.sh
-COPY . .
 
 FROM ubuntu:18.04
-COPY . .
 COPY --from=0 /ttyd/build/ttyd /usr/bin/ttyd
 
 ADD https://github.com/krallin/tini/releases/download/v0.18.0/tini /sbin/tini
 RUN chmod +x /sbin/tini
 
 RUN apt-get update; apt-get install -y --no-install-recommends python3 python3-setuptools python3-pip zip unzip p7zip-full \
-    wget nano detox tmux curl htop net-tools \
+    wget nano detox tmux curl htop net-tools locales pv jq tzdata \
     neofetch python3-dev git bash build-essential nodejs npm ruby \
     python-minimal locales python-lxml gettext-base xz-utils screen \
     && pip3 install gdown && pip3 install speedtest-cli && apt-get autoclean && apt-get autoremove && rm -rf /var/lib/apt/lists/*
